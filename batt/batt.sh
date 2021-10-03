@@ -25,6 +25,4 @@ else
 	fi
 fi
 
-echo -n -e '\007'
-
 exit 0
