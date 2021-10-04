@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-# Monocle IT Solutions rev. 2021100407
+# Monocle IT Solutions rev. 2021100408
 #
 # lowbattcheck.sh
 #
@@ -13,8 +13,7 @@ battstatus=`cat /sys/class/power_supply/BAT0/status`
 if [[ ${battnum} -lt "15" && ${battstatus} == "Discharging" ]]
 then
 	echo -n -e "\n\n\t\t!!!   Connect Power Cable   !!! \n\n" | wall -n
-	aplay --buffer-size=10 -q ~/Scripts/lowbattery.wav
-	exit 0
+	aplay --buffer-size=10 -q ./lowbattery.wav
 else
-	exit 0
 fi
+	exit 0
