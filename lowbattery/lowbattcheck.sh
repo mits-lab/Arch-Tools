@@ -8,12 +8,13 @@
 # Script should be run from root's cron or a systemd timer on a 5 minute repeat. Notifies the terminal when your battery is running low.
 
 battnum=`cat /sys/class/power_supply/BAT0/capacity`
+battstatus=`cat /sys/class/power_supply/BAT0/status`
 
 red='\e[0;31m'
 green='\e[0;32m'
 normal='\e[0m'
 
-if [ ${battnum} > "15" ]
+if [ ${battnum} > "15" && ${battstatus} == "Discharging" ]
 then
 	echo -n -e "\n$red!!!$normal Connect Power Cable$red !!!$normal \n\n" | wall -n
 	aplay --buffer-size=10 -q ~/Scripts/lowbattery.wav
