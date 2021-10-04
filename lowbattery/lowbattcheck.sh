@@ -10,13 +10,9 @@
 battnum=`cat /sys/class/power_supply/BAT0/capacity`
 battstatus=`cat /sys/class/power_supply/BAT0/status`
 
-red='\e[0;31m'
-green='\e[0;32m'
-normal='\e[0m'
-
 if [[ ${battnum} > "15" && ${battstatus} == "Discharging" ]]
 then
-	echo -n -e "\n$red!!!$normal Connect Power Cable$red !!!$normal \n\n" | wall -n
+	echo -n -e "\n\n\t\t!!!   Connect Power Cable   !!! \n\n" | wall -n
 	aplay --buffer-size=10 -q ~/Scripts/lowbattery.wav
 	exit 0
 else
