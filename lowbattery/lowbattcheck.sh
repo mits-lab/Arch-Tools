@@ -14,7 +14,7 @@ red='\e[0;31m'
 green='\e[0;32m'
 normal='\e[0m'
 
-if [ ${battnum} > "15" && ${battstatus} == "Discharging" ]
+if [[ ${battnum} > "15" && ${battstatus} == "Discharging" ]]
 then
 	echo -n -e "\n$red!!!$normal Connect Power Cable$red !!!$normal \n\n" | wall -n
 	aplay --buffer-size=10 -q ~/Scripts/lowbattery.wav
