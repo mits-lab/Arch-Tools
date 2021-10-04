@@ -2,7 +2,7 @@
 
 ============================================================================
 
-Monocle IT Solutions rev. 2021100203
+==+ mits-lab +==
 
 batt.sh
 
@@ -14,7 +14,7 @@ Suggest adding 'batt' alias to .bashrc
 
 ============================================================================
 
-Monocle IT Solutions rev. 2021100203
+==+ mits-lab +==
 
 lowbattcheck.sh
 
