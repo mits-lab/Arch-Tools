@@ -38,6 +38,5 @@ if [[ ${battnum} -lt "15" && ${battstatus} == "Discharging" ]]
 then
 	echo -n -e "\n\n\t\t!!!   Connect Power Cable   !!! \n\n" | wall -n
 	aplay --buffer-size=10 -q ./lowbattery.wav
-else
 fi
 	exit 0
