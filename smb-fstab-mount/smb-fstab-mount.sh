@@ -66,8 +66,8 @@ then
 	echo -n -e "\n\nSamba may be missing. Install the package and try again\n"
 	exit 69
 else
-	echo -n -e "\n\nSamba is installed. Proceeding.. \n"
-	sleep 3s
+	echo -n -e "\n\nAll pre-check tests completed successfully! \n"
+	sleep 2s
 fi
 
 # Present splash and request input.
