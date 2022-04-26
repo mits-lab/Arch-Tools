@@ -67,6 +67,7 @@ then
 	exit 69
 else
 	echo -n -e "\n\nSamba is installed. Proceeding.. \n"
+	sleep 3s
 fi
 
 # Present splash and request input.
