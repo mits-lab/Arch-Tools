@@ -3,7 +3,7 @@
 ## Monocle IT Solutions Labs ##
 ## Server Baseline - Mount SMB via fstab ##
 ## smb-fstab-mount.sh
-## Rev. 2022042507 ##
+## Rev. 2022051509 ##
 
 # Tested on Archlinux April 2022 x86_64 (archlinux-2022.03.01-x86_64.iso) connecting to a FreeNAS smb share.
 #
@@ -51,6 +51,8 @@ normal=`tput sgr0`
 # ${_smbmountdir} - name of directory under /mnt where the share will be mounted. Try to make this unique from any existing directory that may exist.
 # ${_smbuser}     - smb username to connect to share
 # ${_smbpassword} - smb password to connect to share
+# ${_smbuid}      - set user for smb connection
+# ${_smbgid}      - set group for smb connection (should match gid of smb server's dataset group)
 
 # run as root user check.
 
@@ -66,8 +68,7 @@ then
 	echo -n -e "\n\nSamba may be missing. Install the package and try again\n"
 	exit 69
 else
-	echo -n -e "\n\nAll pre-check tests completed successfully! \n"
-	sleep 2s
+	echo -n -e "\n\nSamba is installed. Proceeding.. \n"
 fi
 
 # Present splash and request input.
@@ -100,6 +101,16 @@ echo -n -e "\n"
 echo -n -e "Enter the smb password to connect to share.\n"
 echo -n -e "password: "
 read -s _smbpassword
+echo -n -e "\n\n"
+
+echo -n -e "Enter the SMB UID (user) name or number to assign to the share. This should match the dataset permissions on the SMB server.\n"
+echo -n -e "SMB uid: "
+read _smbuid
+echo -n -e "\n"
+
+echo -n -e "Enter the SMB GID (group) name or number to assign to the share. This should match the dataset permissions on the SMB server.\n"
+echo -n -e "SMB gid: "
+read _smbgid
 echo -n -e "\n"
 
 # ensure values for exist for each critical variable is specified, otherwise exit script.
@@ -124,6 +135,14 @@ if [ -z "$_smbpassword" ]; then
     echo -n -e "\nMissing PASSWORD variable...exiting\n"
     exit 69
 fi
+if [ -z "$_smbuid" ]; then
+    echo -n -e "\nMissing user uid variable...exiting\n"
+    exit 69
+fi
+if [ -z "$_smbgid" ]; then
+    echo -n -e "\nMissing group gid variable...exiting\n"
+    exit 69
+fi
 
 echo -n -e "\nWe have all the information to begin. Beginning fstab configuration.."
 
@@ -144,7 +163,7 @@ mkdir -p /mnt/${_smbmountdir}
 
 cat >> /etc/fstab <<EOL
 # Added smb share with linux-mount-smb-fstab.sh script. Credentials in '/root/.smbcredentials' file.
-//${_smbserver}/${_smbshare}		/mnt/${_smbmountdir}		auto		_netdev,credentials=/root/.smbcredentials,iocharset=utf8,rw 0 0
+//${_smbserver}/${_smbshare}		/mnt/${_smbmountdir}		auto		_netdev,credentials=/root/.smbcredentials,,uid=${_smbuid},gid=${_smbgid},iocharset=utf8,rw 0 0
 EOL
 
 echo -n -e ".$cyan Complete$normal \n\n"
